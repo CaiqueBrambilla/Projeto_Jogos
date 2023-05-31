@@ -13,7 +13,7 @@ size = (1200,600)
 screen = pygame.display.set_mode(size)
 
 # Define um titulo para a janela
-pygame.display.set_caption("Papa Bolinhas")
+pygame.display.set_caption("Rain of Cards")
 
 with open ('escolha.txt', 'r') as arquivo:
     escolha = arquivo.read()
@@ -21,7 +21,7 @@ with open ('escolha.txt', 'r') as arquivo:
 
 
 #Carrega a imagem de fundo
-imagem = pygame.image.load("background.png")
+imagem = pygame.image.load("fazenda.jpg")
 
 #martina = pygame.image.load("martina.png")
 
@@ -126,6 +126,11 @@ while True:
         if event.type == CLOCKTICK:
             temporizador = temporizador +1
 
+            if temporizador >= 140:
+                with open('pontos.txt', 'w') as arquivo:
+                    arquivo.write(str (placar)) 
+                import game_over
+
     relogio = font.render(str (temporizador), True, (0,0,0))
         
     if escolha == '0':
@@ -142,7 +147,7 @@ while True:
 
     #blita a imagem de fundo na tela
     screen.blit(imagem, (0, 0))
-    screen.blit(relogio,(300,300))
+    screen.blit(relogio,(500,50))
 
 
     # Desenha um circulo branco na tela
@@ -166,14 +171,16 @@ while True:
 
     # Se o círculo vermelho ultapassar a  tela ela é reiniciada
     if Y_carta > 600:
+        if(abrigo_atual.nome == desastre_atual.nome):
+            placar -= 1
         criar = True
 
     if temporizador >= 20:
-        Y_carta += 4
+        Y_carta += 2
         velocidadePersonagem = [7,7]
     if temporizador >= 40:
-        Y_carta += 4
-        velocidadePersonagem = [9,9]
+        Y_carta += 2
+        velocidadePersonagem = [8,8]
     if temporizador >= 60:
         Y_carta += 1
         velocidadePersonagem = [10,10]
@@ -183,8 +190,9 @@ while True:
     if temporizador >= 100:
         Y_carta += 1
         velocidadePersonagem = [11,11]
-    # Se o papa bolinhas encostar no círculo vermelho o círculo vermelho é reiniciado
-    # CB: Círculo Branco    CV: Círculo Vermelho 
+    if temporizador >= 120:
+        Y_carta += 1
+        velocidadePersonagem = [11,11]
     
     
     if((posicaojogador[0] + hight_ze >= posicaoCarta[0] and posicaojogador[0] <= posicaoCarta[0] + hight_carta) and(posicaojogador[1] + 40 <= posicaoCarta[1] + widith_carta and posicaojogador[1] + widith_ze >= posicaoCarta[1])):
@@ -206,7 +214,7 @@ while True:
         
 
     # renderizando as fontes do placar na tela
-    score1 = font.render('Placar '+str(placar), True, (WHITE))
+    score1 = font.render('Placar: '+str(placar), True, (WHITE))
     screen.blit(score1, (600, 50))
 
 
