@@ -10,6 +10,7 @@ pygame.init()
 
 # Cria a surface 
 size = (1200,600)
+xpersonagem = 400
 screen = pygame.display.set_mode(size)
 
 # Define um titulo para a janela
@@ -25,7 +26,7 @@ imagem = pygame.image.load("fazenda.jpg")
 
 #martina = pygame.image.load("martina.png")
 
-ze = pygame.image.load("jeramy.png")
+jeramy = pygame.image.load("jeramy.png")
 
 tempestade = pygame.image.load("tempestade_def.png")
 abrigo_tempestade = pygame.image.load("abrigo_tempestade_def.png")
@@ -43,7 +44,7 @@ hight_carta = 50
 widith_ze = 128
 hight_ze = 100
 
-personagem = ze
+personagem = jeramy
 
 class Abrigo:
     def __init__ (self, nome, imagem):
@@ -81,18 +82,14 @@ RED = (255, 0, 0)
 font = pygame.font.SysFont('sans',40)
 placar = 0
 
-# Declara o vetor que controla a posicao X e Y do circulo 
+# Declara o vetor que controla a posicao X e Y 
 posicaojogador = [600, 400]
 
-# Armazena num vetor a Velocidade de movimentacao do circulo 
+# Armazena num vetor a Velocidade de movimentacao 
 velocidadePersonagem = [5, 5]
 
 # Variável para iniciar a posição do círculo vermelho
 criar = True
-
-# Variáveis de posição do círculo vermelho
-X_vermelho = 0
-Y_vermelho = 0
 
 # Variável para contagem de tempo, utilizado para controlar a velocidade de quadros (de atualizações da tela)
 clock = pygame.time.Clock()
@@ -134,7 +131,7 @@ while True:
     relogio = font.render(str (temporizador), True, (0,0,0))
         
     if escolha == '0':
-        personagem = ze
+        personagem = jeramy
     if escolha == '1':
         personagem = hillary
 
@@ -142,6 +139,16 @@ while True:
     pressed = pygame.key.get_pressed()
 
     #Verifica qual tecla (seta) foi pressionada e atualiza o vetor Posicao de acordo com a Velocidade
+    if posicaojogador[0] <= 200:
+        posicaojogador[0] = 200
+    elif posicaojogador[0] >= size[0] - widith_ze:
+        posicaojogador[0] = size[0] - widith_ze
+
+    if posicaojogador[1] <= 0:
+        posicaojogador[1] = 0
+    elif posicaojogador[1] >= size[1] - hight_ze:
+        posicaojogador[1] = size[1] - hight_ze
+
     if pressed[pygame.K_LEFT]: posicaojogador[0] -= velocidadePersonagem[0]
     if pressed[pygame.K_RIGHT]: posicaojogador[0] += velocidadePersonagem[0]
 
